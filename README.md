@@ -124,7 +124,10 @@ Tune in `css/styles.css`: `.glyph-stage { --glyph-h; --glyph-units }` (overall s
 
 ## Tuning layout
 
-Edit **`js/data/glyph-layout.json`**, save; `npm run dev` hot-reloads. No agent needed. Units = SVG slice units.
+Edit **`js/data/glyph-layout.json`**, save; `npm run dev` does a full page reload (JSON is a static Vite import, not a runtime `fetch`). No agent needed. Units = SVG slice units.
+
+- Reload behavior: layout is read once per page load. `npm run preview` / `dist/` serve the built snapshot — run `npm run build` after edits.
+- `cells.shad.dy` maps to the shad's CSS `margin-top` (units × `--u`); negative moves it up.
 
 - `cells.shad.dy` — shad vertical nudge (neg = up)
 - `cells.tsheg` — `{w, yFraction, dx, dy}`

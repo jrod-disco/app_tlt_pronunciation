@@ -1,6 +1,6 @@
 import { MARK_FILES, consonantFiles, getReferenceRoot, loadFirst, vowelFiles } from "./svg-assets.js";
+import LAYOUT from "../data/glyph-layout.json";
 
-const LAYOUT = await fetch(new URL("../data/glyph-layout.json", import.meta.url)).then((r) => r.json());
 const { grid, cells, perGlyph, fallbackRoot } = LAYOUT;
 const NS = "http://www.w3.org/2000/svg";
 const u = (n) => `calc(${n} * var(--u))`;

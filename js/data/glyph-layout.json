@@ -13,7 +13,7 @@
     "root": { "w": 320, "h": 540, "dx": 0, "dy": 0 },
     "vowel": { "gap": 70, "belowGap": 12, "dx": 0, "dy": 0 },
     "tsheg": { "w": 64, "yFraction": 0, "dx": 0, "dy": 0 },
-    "shad": { "w": 76, "dx": 0, "dy": -12 }
+    "shad": { "w": 76, "dx": 0, "dy": -20 }
   },
   "fallbackRoot": {
     "heightFraction": 0.85

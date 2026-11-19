@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TLT Pronunciation</title>
+    <script type="module" crossorigin src="/assets/index-CgxcTLS_.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Bya0Ip0p.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Tibetan Language Tools — Pronunciation</h1>
+      <p class="subtitle">Vowel-grid prototype</p>
+    </header>
+
+    <main class="layout layout--prototype">
+      <section class="panel panel--grid" aria-labelledby="grid-heading">
+        <h2 id="grid-heading">Syllable slots</h2>
+
+        <div class="syllable-grid" role="group" aria-label="Seven syllable roles">
+          <button type="button" class="slot slot--superscript is-disabled" data-role="superscript" disabled title="Superscript">
+            <span class="slot-label">Superscript</span>
+            <span class="slot-value">soon</span>
+          </button>
+          <button type="button" class="slot slot--prefix is-disabled" data-role="prefix" disabled title="Prefix">
+            <span class="slot-label">Prefix</span>
+            <span class="slot-value">soon</span>
+          </button>
+
+          <button type="button" class="slot slot--main is-active" data-role="root" id="slot-main" aria-label="Main letter (root)">
+            <span class="slot-label">Main</span>
+            <span id="glyph-stage" class="glyph-stage" aria-live="polite"></span>
+            <span class="slot-value" id="slot-main-value">ཀ ka</span>
+          </button>
+
+          <button type="button" class="slot slot--suffix is-disabled" data-role="suffix" disabled title="Suffix">
+            <span class="slot-label">Suffix</span>
+            <span class="slot-value">soon</span>
+          </button>
+          <button type="button" class="slot slot--post-suffix is-disabled" data-role="post-suffix" disabled title="Post-suffix">
+            <span class="slot-label">Post-suffix</span>
+            <span class="slot-value">soon</span>
+          </button>
+          <button type="button" class="slot slot--subscript is-disabled" data-role="subscript" disabled title="Subscript">
+            <span class="slot-label">Subscript</span>
+            <span class="slot-value">soon</span>
+          </button>
+          <button type="button" class="slot slot--vowel" data-role="vowel" id="slot-vowel" aria-label="Vowel">
+            <span class="slot-label">Vowel</span>
+            <span class="slot-value" id="slot-vowel-value">a (inherent)</span>
+          </button>
+        </div>
+
+        <p class="audio-note" id="audio-note" role="status"></p>
+      </section>
+
+      <section class="panel panel--pickers" aria-labelledby="pickers-heading">
+        <h2 id="pickers-heading">Pickers</h2>
+
+        <div class="tabs" role="tablist" aria-label="Picker">
+          <button type="button" role="tab" id="tab-consonants" class="tab" aria-selected="true" aria-controls="picker-main">Consonants</button>
+          <button type="button" role="tab" id="tab-vowels" class="tab" aria-selected="false" aria-controls="picker-vowel">Vowels</button>
+        </div>
+
+        <div id="picker-main" class="picker picker--main" role="tabpanel" aria-labelledby="tab-consonants">
+          <div id="consonant-grid" class="consonant-grid"></div>
+        </div>
+
+        <div id="picker-vowel" class="picker picker--vowel" role="tabpanel" aria-labelledby="tab-vowels" hidden>
+          <div id="vowel-choices" class="vowel-choices"></div>
+        </div>
+
+        <details class="legacy-compose">
+          <summary>Text compose (stub)</summary>
+          <p id="compose-stub" class="placeholder"></p>
+          <label for="syllable-input">Syllable string</label>
+          <input
+            id="syllable-input"
+            type="text"
+            name="syllable"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="e.g. བོད་"
+          />
+          <button type="button" id="compose-btn">Compose (stub)</button>
+          <dl id="placement-summary" class="placement-summary">
+            <div><dt>Prefix</dt><dd data-role="prefix">—</dd></div>
+            <div><dt>Superscript</dt><dd data-role="superscript">—</dd></div>
+            <div><dt>Root</dt><dd data-role="root">—</dd></div>
+            <div><dt>Subscript</dt><dd data-role="subscript">—</dd></div>
+            <div><dt>Vowel</dt><dd data-role="vowel">—</dd></div>
+            <div><dt>Suffix</dt><dd data-role="suffix">—</dd></div>
+            <div><dt>Post-suffix</dt><dd data-role="post-suffix">—</dd></div>
+          </dl>
+        </details>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Repo:
+        <a href="https://github.com/jrod-disco/tlt-pronunciation">jrod-disco/tlt-pronunciation</a>
+      </p>
+    </footer>
+
+  </body>
+</html>

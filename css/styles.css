@@ -1,0 +1,401 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f4f0ea;
+  --surface: #fff;
+  --text: #1a1a1a;
+  --muted: #5c5c5c;
+  --accent: #2a5f8f;
+  --border: #ccc5bb;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1b19;
+    --surface: #262422;
+    --text: #ece8e2;
+    --muted: #a8a29a;
+    --accent: #7eb8e8;
+    --border: #3d3a36;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.site-header,
+.site-footer {
+  padding: 1.25rem 1.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.site-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.layout {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1.5rem 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 40rem) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  font-size: 1.1rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.35rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+.glyph-stage {
+  flex: 1;
+  width: 100%;
+  min-height: 11rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+}
+
+/* Glyph grid: parts are separate SVGs (masks) placed by grid areas. Sizes come from js/data/glyph-layout.json in
+   units; --u = px-per-unit. Tune overall size via --glyph-h on .glyph-stage. */
+.glyph-stage {
+  --glyph-h: 11rem;
+  --glyph-units: 1020; /* aboveH + mainH + belowH in glyph-layout.json */
+  --u: calc(var(--glyph-h) / var(--glyph-units));
+}
+
+.glyph-grid {
+  display: grid;
+  align-items: start;
+  justify-content: start;
+  column-gap: calc(var(--col-gap) * var(--u));
+  padding: calc(var(--pad) * var(--u));
+  color: var(--text);
+}
+
+.glyph-part {
+  display: block;
+  background-color: currentColor;
+  -webkit-mask: var(--mask) no-repeat center / 100% 100%;
+  mask: var(--mask) no-repeat center / 100% 100%;
+}
+
+.glyph-part--root {
+  grid-area: root;
+}
+.glyph-part--vowel {
+  justify-self: start;
+}
+.glyph-part--tsheg {
+  grid-area: tsheg;
+  align-self: start;
+}
+.glyph-part--shad {
+  grid-area: shad;
+  align-self: start;
+}
+svg.glyph-part--root {
+  background: none;
+  mask: none;
+  -webkit-mask: none;
+}
+
+.glyph-part.is-tinted {
+  background-color: var(--tint);
+}
+
+.glyph-stage .placeholder {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.placement-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.placement-summary dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.placement-summary dd {
+  margin: 0;
+}
+
+.site-footer {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.site-footer a {
+  color: var(--accent);
+}
+
+/* --- Vowel-grid prototype (letter-positions topology) --- */
+
+.layout--prototype {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 52rem) {
+  .layout--prototype {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+.panel-hint {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.syllable-grid {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, 1fr) minmax(10rem, 3fr) minmax(3.5rem, 1fr) minmax(
+      3.5rem,
+      1fr
+    );
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas:
+    ". super . ."
+    "pre main suf postsuf"
+    ". sub . ."
+    ". vowel . .";
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  max-width: 28rem;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-height: 3.25rem;
+  padding: 0.35rem 0.5rem;
+  margin: 0;
+  border: 1px dashed var(--border);
+  border-radius: 0.4rem;
+  background: var(--bg);
+  font: inherit;
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.slot-label {
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.slot-value {
+  font-size: 0.95rem;
+}
+
+.slot--superscript {
+  grid-area: super;
+}
+.slot--prefix {
+  grid-area: pre;
+}
+.slot--main {
+  grid-area: main;
+  min-height: 14rem;
+  border-style: solid;
+  border-width: 2px;
+  background: var(--surface);
+  font-size: 1rem;
+}
+.slot--suffix {
+  grid-area: suf;
+}
+.slot--post-suffix {
+  grid-area: postsuf;
+}
+.slot--subscript {
+  grid-area: sub;
+}
+.slot--vowel {
+  grid-area: vowel;
+  border-style: solid;
+  background: var(--surface);
+}
+
+.slot.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.slot.is-disabled,
+.slot:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  border-style: dotted;
+}
+
+.slot.is-disabled .slot-value,
+.slot:disabled .slot-value {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.slot.is-active:not(:disabled):hover,
+.slot.is-active:not(:disabled):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.audio-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0.75rem 0 0;
+}
+
+.picker h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.consonant-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.consonant-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+}
+
+.consonant-row:last-child {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 50%;
+}
+
+.consonant-btn,
+.vowel-btn {
+  margin: 0;
+  padding: 0.4rem 0.35rem;
+  font-size: 0.8rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.consonant-btn[aria-pressed="true"],
+.vowel-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.vowel-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.legacy-compose {
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.legacy-compose summary {
+  cursor: pointer;
+  color: var(--text);
+}
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+
+.tab {
+  margin: 0;
+  border-radius: 0.35rem 0.35rem 0 0;
+  background: transparent;
+  color: var(--muted);
+  border-bottom: 3px solid transparent;
+}
+
+.tab[aria-selected="true"] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}

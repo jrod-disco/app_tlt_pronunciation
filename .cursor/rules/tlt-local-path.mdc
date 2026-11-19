@@ -1,0 +1,14 @@
+---
+description: TLT pronunciation local path and naming
+alwaysApply: true
+---
+
+# Local workspace
+
+This Cursor project **is** TLT pronunciation. Canonical path: `~/repo/app_tlt_pronunciation`.
+
+- On-disk folder: `app_tlt_pronunciation` (not `tlt-pronunciation`).
+- Remote: `jrod-disco/tlt-pronunciation`.
+- See `PROJECT.md` in repo root.
+
+Do not target `/Users/JR/repo/tlt-pronunciation` unless Jose renames the folder.

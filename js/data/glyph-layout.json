@@ -1,0 +1,28 @@
+{
+  "debugTint": true,
+  "tintColor": "#c9b896",
+  "_doc": "MAIN glyph grid (js/glyph/GlyphPreview.vue). Units = SVG slice units (ka slice = 540 tall); CSS scales them via --u (see --glyph-h in css/styles.css). Grid: columns = root | tsheg | shad (tsheg/shad columns only exist when shown); rows = vowelAbove | main | vowelBelow. All parts are separate SVG files; root cell is fixed rootW x rootH; cells use align-items:start so shad top == root crossbar top (root is pulled up by perGlyph.crossbarTop). debugTint:true paints vowel+shad in tintColor (cream).",
+  "grid": {
+    "colGap": 24,
+    "padding": 20,
+    "aboveH": 280,
+    "belowH": 200,
+    "mainH": 540
+  },
+  "cells": {
+    "root": { "w": 320, "h": 540, "dx": 0, "dy": 0 },
+    "vowel": { "gap": 70, "belowGap": 12, "dx": 0, "dy": 0 },
+    "tsheg": { "w": 64, "yFraction": 0, "dx": 0, "dy": 0 },
+    "shad": { "w": 76, "dx": 0, "dy": -12 }
+  },
+  "fallbackRoot": {
+    "heightFraction": 0.85
+  },
+  "perGlyph": {
+    "_doc": "Optional per-wylie tweaks. crossbarTop: distance of crossbar top below slice top, in slice units (~47 for ka/kha/ga/nga). Root is shifted up by crossbarTop*scale so crossbar top = main row top. dx/dy nudge the root only.",
+    "ka": { "dx": 0, "dy": 0, "crossbarTop": 47 },
+    "kha": { "dx": 0, "dy": 0, "crossbarTop": 47 },
+    "ga": { "dx": 0, "dy": 0, "crossbarTop": 47 },
+    "nga": { "dx": 0, "dy": 0, "crossbarTop": 47 }
+  }
+}

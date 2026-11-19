@@ -1,7 +1,7 @@
 import { MARK_FILES, consonantFiles, getReferenceRoot, loadFirst, vowelFiles } from "./svg-assets.js";
 import LAYOUT from "../data/glyph-layout.json";
 
-const { grid, cells, perGlyph, fallbackRoot } = LAYOUT;
+const { grid, cells, perGlyph, perVowel = {}, fallbackRoot } = LAYOUT;
 const NS = "http://www.w3.org/2000/svg";
 const u = (n) => `calc(${n} * var(--u))`;
 const above = (id) => id !== "u";
@@ -107,16 +107,17 @@ export function createGlyphDisplay(stage) {
 
     if (vowel) {
       const top = above(vowelId);
+      const pv = perVowel[vowelId] ?? {};
       const extra = {
         gridArea: top ? "vowel-above" : "vowel-below",
-        marginLeft: u((cells.root.w - vowel.w) / 2 + cells.vowel.dx),
+        marginLeft: u((cells.root.w - vowel.w) / 2 + (pv.dx ?? cells.vowel.dx)),
       };
       if (top) {
         extra.alignSelf = "end";
-        extra.marginBottom = u(cells.vowel.gap - cells.vowel.dy);
+        extra.marginBottom = u((pg.vowelGap ?? pv.gap ?? cells.vowel.gap) - (pv.dy ?? cells.vowel.dy));
       } else {
         extra.alignSelf = "start";
-        extra.marginTop = u(box.h - crossbarTop + cells.vowel.belowGap + cells.vowel.dy - grid.mainH);
+        extra.marginTop = u(box.h - crossbarTop + (pv.belowGap ?? cells.vowel.belowGap) + (pv.dy ?? cells.vowel.dy) - grid.mainH);
       }
       const el = maskPart("glyph-part--vowel", vowel, vowel.w, vowel.h, extra);
       if (LAYOUT.debugTint) el.classList.add("is-tinted");

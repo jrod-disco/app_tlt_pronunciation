@@ -1,23 +1,25 @@
 :root {
   color-scheme: light dark;
-  --bg: #f4f0ea;
-  --surface: #fff;
-  --text: #1a1a1a;
-  --muted: #5c5c5c;
-  --accent: #2a5f8f;
-  --border: #ccc5bb;
+  /* Light — warm parchment + saffron */
+  --bg: #f5edd5;
+  --surface: #ede0c4;
+  --text: #2c1810;
+  --muted: #7a5c40;
+  --accent: #9b4400;
+  --border: #c4aa80;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height: 1.5;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1c1b19;
-    --surface: #262422;
-    --text: #ece8e2;
-    --muted: #a8a29a;
-    --accent: #7eb8e8;
-    --border: #3d3a36;
+    /* Dark — deep maroon + saffron gold */
+    --bg: #180c0e;
+    --surface: #2a1518;
+    --text: #f0e6cc;
+    --muted: #a08060;
+    --accent: #e8a020;
+    --border: #4a2830;
   }
 }
 
@@ -258,7 +260,7 @@ svg.glyph-part--root {
 
 .slot-label {
   font-weight: 600;
-  color: var(--muted);
+  color: var(--accent);
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;

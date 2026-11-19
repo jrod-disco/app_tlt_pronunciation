@@ -117,9 +117,11 @@ export function createGlyphDisplay(stage) {
       );
     }
     if (shadM) {
+      const shadDy = Number(cells?.shad?.dy ?? 0);
+      const shadMarginTop = `${shadDy * (11 / 1020) * 16}px`;
       const el = maskPart("glyph-part--shad", shadM, shadM.w, shadM.h, {
         marginLeft: u((cells.shad.w - shadM.w) / 2 + cells.shad.dx),
-        marginTop: u(cells.shad.dy),
+        marginTop: shadMarginTop,
       });
       if (LAYOUT.debugTint) el.classList.add("is-tinted");
       g.appendChild(el);

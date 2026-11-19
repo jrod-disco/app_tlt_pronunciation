@@ -1,5 +1,5 @@
 import { composeSyllable, renderCompositionStub } from "./composer.js";
-import { UNIT1_CONSONANTS, UNIT1_ROWS } from "./data/unit1-consonants.js";
+import { CONSONANTS, CONSONANT_ROWS } from "./data/consonants.js";
 import { VOWEL_CHOICES } from "./data/vowels.js";
 import {
   getAudioSeekNote,
@@ -30,13 +30,13 @@ const vowelChoices = document.getElementById("vowel-choices");
 
 /** @type {{ wylie: string, vowelId: string }} */
 let state = {
-  wylie: UNIT1_CONSONANTS[0].wylie,
+  wylie: CONSONANTS[0].wylie,
   vowelId: "a",
 };
 
 function getConsonant() {
   return (
-    UNIT1_CONSONANTS.find((c) => c.wylie === state.wylie) ?? UNIT1_CONSONANTS[0]
+    CONSONANTS.find((c) => c.wylie === state.wylie) ?? CONSONANTS[0]
   );
 }
 
@@ -115,7 +115,7 @@ function setActiveSlot(which) {
 function buildConsonantGrid() {
   if (!consonantGrid) return;
 
-  for (const row of UNIT1_ROWS) {
+  for (const row of CONSONANT_ROWS) {
     const rowEl = document.createElement("div");
     rowEl.className = "consonant-row";
     for (const c of row) {

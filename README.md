@@ -88,7 +88,7 @@ Structure notes: Project store `internal/vowel-svg-notes.md` (primary) and `inte
 
 Playback (`js/audio.js`), per letter, first match wins:
 
-1. **Individual file** `assets/audio/consonants/<wylie>.mp3` (or `.wav`), e.g. `ka.mp3`, `kha.mp3`, `nya.mp3` (Wylie as in `js/data/unit1-consonants.js`). Drop it in; no code change. Reload to pick up (results are cached per session).
+1. **Individual file** `assets/audio/consonants/<wylie>.mp3` (or `.wav`), e.g. `ka.mp3`, `kha.mp3`, `nya.mp3` (Wylie as in `js/data/consonants.js`). Drop it in; no code change. Reload to pick up (results are cached per session).
 2. **Master mp3 + offsets**: `js/data/consonant-audio-offsets.json` holds `{ "start", "end" }` seconds per Wylie key. Edit by ear; Vite hot-reloads.
 3. **Equal split** of the master file if a letter has no (valid) entry.
 

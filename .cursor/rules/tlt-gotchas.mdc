@@ -1,0 +1,31 @@
+---
+description: Known bugs, active fixes, do-nots for TLT pronunciation
+alwaysApply: true
+---
+
+# Gotchas & Do-Nots
+
+## Active / recently fixed
+
+### Shad vertical offset (priority)
+- `cells.shad.dy` in `glyph-layout.json` controls shad `margin-top`
+- **Must use px calc, NOT `u()`** (see `tlt-glyph-grid` rule)
+- Symptom: devtools shows `calc(0 * var(--u))` → wrong code path still live
+- Fix is in `glyph-display.js` ~line 121; verify with `git log` before re-patching
+
+### Diagnosing shad offset
+1. Check `glyph-layout.json` → `cells.shad.dy` has the intended value (e.g. `-20`)
+2. Check devtools inline style on `.glyph-part--shad` — should show a px value, not `calc(0 * ...)`
+3. If still wrong: confirm `dy` is read from `cells.shad.dy` **before** `marginTop` is set
+
+## Do NOT
+- Target path `/Users/JR/repo/tlt-pronunciation` — wrong (see `tlt-local-path` rule)
+- Use cloud-only agents with no local repo access on this project
+- Do long SVG archaeology in the master SVG files — use sliced assets in `assets/svg/consonants/`
+- Hardcode layout numbers in JS — always put them in `glyph-layout.json`
+- Use `u(cells.shad.dy)` for shad margin — this is the known bad pattern
+
+## Stubs (don't treat as implemented)
+- `js/composer.js` — text compose stub, not wired
+- `js/rules/placement.js` — placement rules stub
+- Vowel audio — `playVowelSyllable` is a stub; vowel changes replay consonant clip

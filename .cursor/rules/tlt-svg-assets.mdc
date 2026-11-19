@@ -1,0 +1,33 @@
+---
+description: SVG asset strategy — two master files, sliced assets, Wylie naming, fallback chain
+globs: js/glyph/**, assets/svg/**
+alwaysApply: false
+---
+
+# SVG Assets
+
+## Two master files
+
+| Role | File |
+|------|------|
+| **PRIMARY** (use first) | `assets/svg/Tibetan_consonants་_and_vowel_marks_with_additional_consonants_and_vowels_for_writing_Sanskrit.svg` — Fynn chart; consonant stacks **with vowel marks** |
+| **Reference** | `assets/svg/Uchen_and_Umê_scripts.svg` — labeled Uchen + Umê; **no vowel signs**; fallback root only |
+
+## Sliced assets (preferred)
+
+```
+assets/svg/consonants/<wylie>.svg    # ka, kha, ga, nga sliced so far
+assets/svg/vowels/<i|u|e|o>.svg      # or mark-<v>.svg
+assets/svg/marks/mark-tsek.svg
+assets/svg/marks/mark-shad.svg       # also assets/svg/mark-shad.svg; shad=1 query
+```
+
+Loader (`svg-assets.js`) tries sliced files first; falls back to reference chart SVG path extraction.
+
+## Wylie key convention
+
+Keys in `glyph-layout.json → perGlyph` and audio offsets use **Wylie transliteration** matching `js/data/unit1-consonants.js` (e.g. `ka`, `kha`, `ga`, `nga`). Keep consistent — don't mix EWTS or Unicode labels.
+
+## Shad query param
+
+Shad SVG is fetched with `?shad=1` appended. Reflected in `MARK_FILES.shad` in `svg-assets.js`.

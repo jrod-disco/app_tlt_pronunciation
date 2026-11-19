@@ -1,12 +1,12 @@
 /**
- * TLS Unit 1 — 30 consonants in ka-cha-ta-pa… row order (8 rows × 4, last row has 2).
- * TODO: placement rules in js/rules/placement.js — this file is picker data only.
+ * Standard Central Tibetan — 30 consonants in traditional row order (8 rows × 4, last row has 2).
+ * Picker data only. Placement rules live in js/rules/placement.js.
  */
 
 /** @typedef {{ wylie: string, tibetan: string, label: string, lowTone?: boolean }} Consonant */
 
 /** @type {Consonant[]} */
-export const UNIT1_CONSONANTS = [
+export const CONSONANTS = [
   // row 1
   { wylie: "ka", tibetan: "ཀ", label: "ka" },
   { wylie: "kha", tibetan: "ཁ", label: "kha", lowTone: true },
@@ -48,13 +48,13 @@ export const UNIT1_CONSONANTS = [
 ];
 
 /** @type {ReadonlyArray<readonly Consonant[]>} */
-export const UNIT1_ROWS = [
-  UNIT1_CONSONANTS.slice(0, 4),
-  UNIT1_CONSONANTS.slice(4, 8),
-  UNIT1_CONSONANTS.slice(8, 12),
-  UNIT1_CONSONANTS.slice(12, 16),
-  UNIT1_CONSONANTS.slice(16, 20),
-  UNIT1_CONSONANTS.slice(20, 24),
-  UNIT1_CONSONANTS.slice(24, 28),
-  UNIT1_CONSONANTS.slice(28, 30),
+export const CONSONANT_ROWS = [
+  CONSONANTS.slice(0, 4),
+  CONSONANTS.slice(4, 8),
+  CONSONANTS.slice(8, 12),
+  CONSONANTS.slice(12, 16),
+  CONSONANTS.slice(16, 20),
+  CONSONANTS.slice(20, 24),
+  CONSONANTS.slice(24, 28),
+  CONSONANTS.slice(28, 30),
 ];

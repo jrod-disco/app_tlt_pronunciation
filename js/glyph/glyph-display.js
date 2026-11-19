@@ -6,12 +6,25 @@ const NS = "http://www.w3.org/2000/svg";
 const u = (n) => `calc(${n} * var(--u))`;
 const above = (id) => id !== "u";
 
+/** Darken a hex color by `amount` (0–1). */
+function darkenHex(hex, amount) {
+  const f = 1 - amount;
+  const r = Math.round(parseInt(hex.slice(1, 3), 16) * f);
+  const g = Math.round(parseInt(hex.slice(3, 5), 16) * f);
+  const b = Math.round(parseInt(hex.slice(5, 7), 16) * f);
+  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+}
+
 function maskPart(cls, m, w, h, extra = {}) {
   const el = document.createElement("div");
   el.className = `glyph-part ${cls}`;
   el.style.width = u(w);
   el.style.height = u(h);
-  el.style.setProperty("--mask", `url("${new URL(m.url, document.baseURI).href}")`);
+  // Set mask directly (not via --mask custom property) so relative URLs resolve
+  // against the document rather than the stylesheet.
+  const maskVal = `url("${m.url}") no-repeat center / 100% 100%`;
+  el.style.webkitMask = maskVal;
+  el.style.mask = maskVal;
   Object.assign(el.style, extra);
   return el;
 }
@@ -46,7 +59,7 @@ export function createGlyphDisplay(stage) {
     const pg = perGlyph[wylie] ?? {};
     let box;
     if (root) {
-      const s = Math.min(cells.root.w / root.w, cells.root.h / root.h);
+      const s = (cells.root.w / root.w) * (pg.scale ?? 1); // scale to width; perGlyph.scale normalizes inconsistent slice sizes
       box = { s, w: root.w * s, h: root.h * s };
     } else {
       const s = (grid.mainH * fallbackRoot.heightFraction) / ref.h;
@@ -65,6 +78,7 @@ export function createGlyphDisplay(stage) {
     g.setAttribute("role", "img");
     g.setAttribute("aria-label", `${wylie} + ${vowelId}`);
     g.style.setProperty("--tint", LAYOUT.tintColor ?? "#c9b896");
+    g.style.setProperty("--tint-mark", darkenHex(LAYOUT.tintColor ?? "#c9b896", 0.3));
     g.style.setProperty("--col-gap", grid.colGap);
     g.style.setProperty("--pad", grid.padding);
     g.style.gridTemplateColumns = cols.map((c) => u(c)).join(" ");
@@ -109,21 +123,19 @@ export function createGlyphDisplay(stage) {
       g.appendChild(el);
     }
     if (tshegM) {
-      g.appendChild(
-        maskPart("glyph-part--tsheg", tshegM, tshegM.w, tshegM.h, {
-          marginLeft: u((cells.tsheg.w - tshegM.w) / 2 + cells.tsheg.dx),
-          marginTop: u(grid.mainH * cells.tsheg.yFraction + cells.tsheg.dy),
-        })
-      );
+      const el = maskPart("glyph-part--tsheg", tshegM, tshegM.w, tshegM.h, {
+        marginLeft: u((cells.tsheg.w - tshegM.w) / 2 + cells.tsheg.dx),
+        marginTop: u(grid.mainH * cells.tsheg.yFraction + cells.tsheg.dy),
+      });
+      el.classList.add("is-tinted-mark");
+      g.appendChild(el);
     }
     if (shadM) {
-      const shadDy = Number(cells?.shad?.dy ?? 0);
-      const shadMarginTop = `${shadDy * (11 / 1020) * 16}px`;
       const el = maskPart("glyph-part--shad", shadM, shadM.w, shadM.h, {
         marginLeft: u((cells.shad.w - shadM.w) / 2 + cells.shad.dx),
-        marginTop: shadMarginTop,
+        marginTop: u(cells.shad.dy ?? 0),
       });
-      if (LAYOUT.debugTint) el.classList.add("is-tinted");
+      el.classList.add("is-tinted-mark");
       g.appendChild(el);
     }
     stage.appendChild(g);

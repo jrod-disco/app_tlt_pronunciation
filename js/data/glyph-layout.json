@@ -12,17 +12,43 @@
   "cells": {
     "root": { "w": 320, "h": 540, "dx": 0, "dy": 0 },
     "vowel": { "gap": 70, "belowGap": 12, "dx": 0, "dy": 0 },
-    "tsheg": { "w": 64, "yFraction": 0, "dx": 0, "dy": 0 },
-    "shad": { "w": 76, "dx": 0, "dy": -20 }
+    "tsheg": { "w": 64, "yFraction": 0, "dx": 0, "dy": -50 },
+    "shad": { "w": 76, "dx": 0, "dy": -50 }
   },
   "fallbackRoot": {
     "heightFraction": 0.85
   },
   "perGlyph": {
-    "_doc": "Optional per-wylie tweaks. crossbarTop: distance of crossbar top below slice top, in slice units (~47 for ka/kha/ga/nga). Root is shifted up by crossbarTop*scale so crossbar top = main row top. dx/dy nudge the root only.",
-    "ka": { "dx": 0, "dy": 0, "crossbarTop": 47 },
-    "kha": { "dx": 0, "dy": 0, "crossbarTop": 47 },
-    "ga": { "dx": 0, "dy": 0, "crossbarTop": 47 },
-    "nga": { "dx": 0, "dy": 0, "crossbarTop": 47 }
+    "_doc": "Per-wylie tweaks. crossbarTop: distance of crossbar top below slice top, in slice units. Root is shifted up by crossbarTop*scale so crossbar aligns with main row top. Tune visually with ?shad=1. dx/dy nudge the root only.",
+    "ka":  { "dx": 0, "dy": 0, "crossbarTop": 47, "scale": 1 },
+    "kha": { "dx": 0, "dy": 0, "crossbarTop": 47, "scale": 1 },
+    "ga":  { "dx": 0, "dy": 0, "crossbarTop": 47, "scale": 1 },
+    "nga": { "dx": 0, "dy": 0, "crossbarTop": 47, "scale": 1 },
+    "ca":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "cha": { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "ja":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "nya": { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "ta":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "tha": { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "da":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "na":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "pa":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "pha": { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "ba":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "ma":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "tsa": { "dx": 20, "dy": 0, "crossbarTop": 90,  "scale": 1.15 },
+    "tsha":{ "dx": 20, "dy": 0, "crossbarTop": 90,  "scale": 1.1 },
+    "dza": { "dx": 30, "dy": 0, "crossbarTop": 90,  "scale": 1.1 },
+    "wa":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "zha": { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "za":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "'a":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "ya":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "ra":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "la":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "sha": { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "sa":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "ha":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
+    "a":   { "dx": 0, "dy": 0, "crossbarTop": 0 }
   }
 }

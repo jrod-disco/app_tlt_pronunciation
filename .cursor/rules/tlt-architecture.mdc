@@ -1,0 +1,42 @@
+---
+description: TLT Pronunciation — stack, key files, project map
+alwaysApply: true
+---
+
+# Architecture
+
+**Stack:** Browser-only static app. Vite + Vue 3 (single SFC: `GlyphPreview.vue`); everything else vanilla JS ES modules.
+
+## Key files
+
+| File | Role |
+|------|------|
+| `index.html` | Entry point; loads `js/main.js` |
+| `js/main.js` | App init, consonant/vowel pickers |
+| `js/composer.js` | Syllable composer **stub** — not wired yet |
+| `js/rules/placement.js` | Placement rules **stub** |
+| `js/glyph/glyph-display.js` | Grid composer — root/vowel/tsheg/shad |
+| `js/glyph/svg-assets.js` | SVG loader, file resolution |
+| `js/data/glyph-layout.json` | All layout numbers (tune here, never hardcode) |
+| `js/data/unit1-consonants.js` | Consonant list (Wylie keys) |
+| `js/data/vowels.js` | Vowel list |
+| `js/audio.js` | Audio playback |
+| `js/data/consonant-audio-offsets.json` | Per-consonant offsets in master MP3 |
+| `css/styles.css` | `--glyph-h`, `--glyph-units`, `--u` CSS vars |
+| `css/parts.css` | `.glyph-part--*` grid areas / masks |
+
+## Rendering pipeline
+
+```
+glyph-layout.json
+      ↓ (static Vite import — full reload on edit)
+glyph-display.js  →  CSS Grid (.glyph-grid)
+      ↓                    ↓
+  svg-assets.js      parts.css / styles.css
+  (async fetch)
+```
+
+## Scope limits (v0)
+- No server, no backend, no CI
+- Umê / `layer4` SVG out of scope until later milestone
+- Composer/placement stubs — text compose not yet wired

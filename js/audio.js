@@ -6,7 +6,7 @@
  * Vowel audio: stub (replays consonant clip).
  */
 
-import { UNIT1_CONSONANTS } from "./data/unit1-consonants.js";
+import { CONSONANTS } from "./data/consonants.js";
 const offsetData = await fetch(new URL("./data/consonant-audio-offsets.json", import.meta.url)).then((r) => r.json());
 
 export const CONSONANTS_AUDIO_SRC = "assets/audio/tibetanconsonants.mp3";
@@ -15,7 +15,7 @@ const FILE_EXTS = ["mp3", "wav"];
 
 export const CONSONANTS_AUDIO_DURATION_SEC = offsetData.duration ?? 23.14449;
 
-const LETTER_COUNT = UNIT1_CONSONANTS.length;
+const LETTER_COUNT = CONSONANTS.length;
 const SEGMENT_SEC = CONSONANTS_AUDIO_DURATION_SEC / LETTER_COUNT;
 const OFFSETS = offsetData.consonants ?? {};
 
@@ -43,7 +43,7 @@ function validSegment(seg) {
 
 /** Segment in seconds for a letter. */
 export function getSegment(index) {
-  const wylie = UNIT1_CONSONANTS[index].wylie;
+  const wylie = CONSONANTS[index].wylie;
   const seg = OFFSETS[wylie];
   if (validSegment(seg)) return { start: seg.start, end: seg.end, mode: "offsets" };
   const start = index * SEGMENT_SEC;
@@ -98,11 +98,11 @@ function noteMode(mode, wylie) {
 }
 
 /**
- * @param {number} index - 0..29 in UNIT1_CONSONANTS order
+ * @param {number} index - 0..29 in CONSONANTS order
  */
 export async function playConsonantByIndex(index) {
   if (index < 0 || index >= LETTER_COUNT) return;
-  const { wylie } = UNIT1_CONSONANTS[index];
+  const { wylie } = CONSONANTS[index];
 
   stopActive();
   const fileUrl = await findConsonantFile(wylie);
@@ -132,7 +132,7 @@ export async function playConsonantByIndex(index) {
 
 /** @param {string} wylie */
 export function playConsonantByWylie(wylie) {
-  const index = UNIT1_CONSONANTS.findIndex((c) => c.wylie === wylie);
+  const index = CONSONANTS.findIndex((c) => c.wylie === wylie);
   if (index >= 0) playConsonantByIndex(index);
 }
 

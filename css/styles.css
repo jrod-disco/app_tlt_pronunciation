@@ -140,8 +140,7 @@ button:hover {
 .glyph-part {
   display: block;
   background-color: currentColor;
-  -webkit-mask: var(--mask) no-repeat center / 100% 100%;
-  mask: var(--mask) no-repeat center / 100% 100%;
+  /* mask is set inline by maskPart() so relative URLs resolve against the document */
 }
 
 .glyph-part--root {
@@ -166,6 +165,10 @@ svg.glyph-part--root {
 
 .glyph-part.is-tinted {
   background-color: var(--tint);
+}
+
+.glyph-part.is-tinted-mark {
+  background-color: var(--tint-mark);
 }
 
 .glyph-stage .placeholder {

@@ -1,0 +1,74 @@
+---
+description: Glyph grid system — layout units, u(), shad px fix, perGlyph tweaks
+globs: js/glyph/**, js/data/glyph-layout.json, css/parts.css
+alwaysApply: false
+---
+
+# Glyph Grid
+
+## Unit system
+
+```js
+const u = (n) => `calc(${n} * var(--u))`;
+// --u = --glyph-h / --glyph-units  (set in css/styles.css on .glyph-stage)
+// --glyph-units = aboveH + mainH + belowH  (must stay in sync with glyph-layout.json)
+```
+
+All sizes/offsets in `glyph-layout.json` are **SVG slice units**. Apply via `u()`.
+
+## Mask URLs — set inline, not via CSS custom property
+
+CSS custom properties containing `url()` resolve relative to the **stylesheet**, not the document. Setting `mask` directly as an inline style resolves relative to the document (correct).
+
+```js
+// ✅ CORRECT — relative URL resolves against document
+const maskVal = `url("${m.url}") no-repeat center / 100% 100%`;
+el.style.webkitMask = maskVal;
+el.style.mask = maskVal;
+
+// ❌ WRONG — url() inside custom property resolves relative to css/styles.css
+el.style.setProperty("--mask", `url("${m.url}")`);
+```
+
+## Shad dy — use u() like everything else
+
+`cells.shad.dy` works with `u()` just like all other offsets. The old px-formula workaround was solving the wrong problem (the real bug was dy=0 in stale JSON, not var(--u) failing to resolve):
+
+```js
+// ✅ CORRECT — consistent with all other parts
+marginTop: u(cells.shad.dy ?? 0),
+
+// ❌ WRONG — hardcoded px formula, breaks if --glyph-h changes
+marginTop: `${shadDy * (11 / 1020) * 16}px`
+```
+
+## Grid areas
+
+Columns: `root | tsheg | shad` (tsheg/shad columns only exist when shown).  
+Rows: `vowelAbove | main | vowelBelow`.
+
+`.glyph-part--shad` → `grid-column: 3` only (not 2/4).
+
+## perGlyph tweaks
+
+In `glyph-layout.json → perGlyph.<wylie>`:
+- `crossbarTop` — distance (units) from slice top to crossbar top. Root is shifted up by `crossbarTop * scale` so crossbar aligns with main row top.
+- `dx` / `dy` — nudge root only.
+
+**crossbarTop varies by consonant shape:**
+- Rows 1–4 (ka/kha/ga/nga…): ~47 — no top extensions
+- Row 5 (tsa/tsha/dza): flag on top-right corner extends above crossbar → larger value
+- Rows 6–8: shapes vary; measure each
+
+**Tuning workflow** (browser, no measurement needed):
+1. Add `perGlyph.<wylie>: { crossbarTop: 0, scale: 1 }` to JSON
+2. Load `?shad=1` — shad will be at the top of the main row
+3. Adjust `scale` until letter matches the visual size of ka (slices have inconsistent bounding box heights)
+4. Increase `crossbarTop` until shad top aligns with the crossbar stroke
+5. Save values; move to next consonant
+
+**Note:** Slice bounding boxes are inconsistent across consonants. `perGlyph.scale` compensates — ka = 1.0 reference. Letters sliced with a smaller box need scale > 1.
+
+## Layout JSON reload
+
+`glyph-layout.json` is a **static Vite import** — HMR does a full page reload on save. Changes are read once per page load. `npm run build` required to bake into `dist/`.

@@ -1,0 +1,43 @@
+---
+description: Dev commands, HMR behavior, layout tuning workflow, audio offsets
+alwaysApply: true
+---
+
+# Dev Workflow
+
+## Run
+
+```bash
+cd ~/repo/app_tlt_pronunciation
+npm run dev        # Vite HMR — http://127.0.0.1:3030 (may use 3031 if busy)
+npm run preview    # Python static server, no HMR
+npm run build      # writes dist/
+```
+
+## HMR behavior
+
+- JS/CSS/`.vue` → hot reload (no full refresh)
+- `glyph-layout.json` → **full page reload** (static Vite import — by design)
+- After `npm run build`, serve `dist/` with `npm run preview:vite`
+
+## Layout tuning (no agent needed)
+
+1. Edit `js/data/glyph-layout.json`
+2. Save → page auto-reloads
+3. Iterate. All numbers are SVG slice units.
+
+## Audio tuning
+
+- Drop `assets/audio/consonants/<wylie>.mp3` → picked up on next reload, no code change
+- Or edit `js/data/consonant-audio-offsets.json` → Vite hot-reloads the page
+
+## Public assets symlink
+
+`public/assets` → `../assets` (symlink). After fresh clone, if missing:
+```bash
+ln -sfn ../assets public/assets
+```
+
+## Deploy
+
+Manual upload by Jose. No GitHub Pages. Upload repo root preserving `index.html`, `css/`, `js/`, `assets/`.

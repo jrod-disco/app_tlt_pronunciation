@@ -1,21 +1,27 @@
-# TLT Pronunciation (local workspace)
+# TLT Pronunciation — agent handoff
 
-**Confirmed:** This folder is the correct local home for **Tibetan Language Tools — pronunciation** (2026-11-19).
+## Run
+- `npm run dev` (port 3030, may use 3031)
+- Layout JSON edits need save → full page reload (static import in glyph-display.js)
 
-| Item | Value |
-|------|--------|
-| Umbrella | Tibetan Language Tools (TLT) |
-| GitHub | `jrod-disco/tlt-pronunciation` |
-| Local path | `/Users/jr/repo/app_tlt_pronunciation` |
-| Cloud scaffold | Agent VM `/agent/tlt-pronunciation` (until copied here) |
+## Active bug (priority)
+**Shad vertical offset:** `js/data/glyph-layout.json` → `cells.shad.dy`
+User sets dy (e.g. -20); devtools on `.glyph-part--shad` may still show `margin-top: calc(0 * var(--u))` meaning JS passed 0 into u(), NOT that JSON is wrong. Literal `-10px` in devtools works on same element.
 
-## For agents
+**Expected fix pattern** (verify on disk): in `js/glyph/glyph-display.js` shad render, use px: `marginTop: ${Number(cells?.shad?.dy ?? 0) * (11/1020) * 16}px` — NOT `u(cells.shad.dy)`.
 
-- Jose opened this empty folder as the Cursor workspace; a private worker is registered for this path.
-- Do **not** assume `tlt-pronunciation` or `/Users/JR/repo/tlt-pronunciation` on disk — use **`app_tlt_pronunciation`** here.
-- v1: browser-only static HTML/JS, Central Tibetan pronunciation, placement rule engine, SVG under `assets/svg/`.
-- See cloud project memory: `docs/project-context.md` in the **Tibetan Language Tools** agent store (updated with this path).
+**User still sees multiplier 0 after claimed fix** — verify git log, actual inline style, and that dy is read before render. Log once if needed.
 
-## Next step (when Jose asks)
+## Key files
+- js/glyph/glyph-display.js — grid compose, shad/tsheg/root
+- js/data/glyph-layout.json — tuning (cells.shad.dy, debugTint, perGlyph crossbar)
+- css/styles.css — .glyph-stage sets --glyph-h, --glyph-units, --u
+- css/parts.css — .glyph-part--shad grid-column (should be col 3 only, not 2/4)
 
-Clone or copy scaffold from `jrod-disco/tlt-pronunciation` into this directory and init git if needed.
+## Git
+Remote may be unset. Recent commits mentioned: efb9f42 (import layout JSON), px shad margin fix on glyph-display.js.
+
+## Do NOT
+- Cloud-only agents (no repo access)
+- Long SVG archaeology
+- Duplicate ~/JR-repos paths

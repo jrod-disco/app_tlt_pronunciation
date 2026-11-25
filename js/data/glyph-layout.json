@@ -20,7 +20,7 @@
     "i": { "gap": 70, "dx": 0, "dy": 0 },
     "u": { "belowGap": 12, "dx": 0, "dy": 0 },
     "e": { "gap": 70, "dx": 0, "dy": 0 },
-    "o": { "gap": 70, "dx": 20, "dy": 0 }
+    "o": { "gap": 70, "dx": 20, "dy": 20 }
   },
   "fallbackRoot": {
     "heightFraction": 0.85
@@ -56,6 +56,6 @@
     "sha": { "dx": 0, "dy": 0, "crossbarTop": 0 },
     "sa":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
     "ha":  { "dx": 0, "dy": 0, "crossbarTop": 0 },
-    "a":   { "dx": 0, "dy": 0, "crossbarTop": 0 }
+    "a":   { "dx": -20, "dy": 0, "crossbarTop": 0, "scale":1.25 }
   }
 }

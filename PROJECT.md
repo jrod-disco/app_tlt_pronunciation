@@ -1,27 +1,11 @@
-# TLT Pronunciation — agent handoff
+# Context → ContextDev (ganesha)
 
-## Run
-- `npm run dev` (port 3030, may use 3031)
-- Layout JSON edits need save → full page reload (static import in glyph-display.js)
+Planning, handoff, Tibetan reference, and tickets live in **CONDEV**, not this repo.
 
-## Active bug (priority)
-**Shad vertical offset:** `js/data/glyph-layout.json` → `cells.shad.dy`
-User sets dy (e.g. -20); devtools on `.glyph-part--shad` may still show `margin-top: calc(0 * var(--u))` meaning JS passed 0 into u(), NOT that JSON is wrong. Literal `-10px` in devtools works on same element.
+| What | Where |
+|------|--------|
+| **Start here** | `~/repo/ai-context-dev-ganesha/work/app-tlt-pronunciation/ANCHOR.md` |
+| Multi-root Cursor | `~/repo/ai-context-dev-ganesha/workspaces/app-tlt-pronunciation.code-workspace` |
+| Resume phrase | **read ANCHOR** (loads `rules/contextdev-user-rule.md` via front matter) |
 
-**Expected fix pattern** (verify on disk): in `js/glyph/glyph-display.js` shad render, use px: `marginTop: ${Number(cells?.shad?.dy ?? 0) * (11/1020) * 16}px` — NOT `u(cells.shad.dy)`.
-
-**User still sees multiplier 0 after claimed fix** — verify git log, actual inline style, and that dy is read before render. Log once if needed.
-
-## Key files
-- js/glyph/glyph-display.js — grid compose, shad/tsheg/root
-- js/data/glyph-layout.json — tuning (cells.shad.dy, debugTint, perGlyph crossbar)
-- css/styles.css — .glyph-stage sets --glyph-h, --glyph-units, --u
-- css/parts.css — .glyph-part--shad grid-column (should be col 3 only, not 2/4)
-
-## Git
-Remote may be unset. Recent commits mentioned: efb9f42 (import layout JSON), px shad margin fix on glyph-display.js.
-
-## Do NOT
-- Cloud-only agents (no repo access)
-- Long SVG archaeology
-- Duplicate ~/JR-repos paths
+This tree stays **deployable code** + `.cursor/rules/tlt-*.mdc`. Do not add new planning `.md` here — use CONDEV **sync** instead.

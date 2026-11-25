@@ -6,7 +6,7 @@
 |------|--------|
 | GitHub owner | [jrod-disco](https://github.com/jrod-disco) |
 | Remote repo | `jrod-disco/tlt-pronunciation` |
-| Local folder | `app_tlt_pronunciation` (on disk; see [PROJECT.md](./PROJECT.md)) |
+| Local folder | `app_tlt_pronunciation` (CONDEV: `~/repo/ai-context-dev-ganesha/work/app-tlt-pronunciation/ANCHOR.md`) |
 
 ## Local development
 
@@ -76,7 +76,7 @@ Manual upload by Jose — **no** GitHub Pages requirement. Upload the project tr
 
 **Sliced assets:** `consonants/<wylie>.svg` (ka–nga so far), `vowels/<i|u|e|o>.svg` (or `mark-<v>.svg`), `mark-tsek.svg`, `mark-shad.svg` (also looked up in `marks/`) are preferred by `js/glyph/GlyphPreview.vue`; other consonants fall back to the reference chart. Shad: add `?shad=1`.
 
-Structure notes: Project store `internal/vowel-svg-notes.md` (primary) and `internal/uchen-svg-notes.md` (reference / two-file strategy).
+Structure notes: cloud agent store `internal/vowel-svg-notes.md` / `internal/uchen-svg-notes.md` (not yet in CONDEV — migrate on request).
 
 **Research:** slot-position diagram → `assets/research/letter-positions.webp`.
 
@@ -138,4 +138,4 @@ Edit **`js/data/glyph-layout.json`**, save; `npm run dev` does a full page reloa
 
 ## Project notes
 
-Workspace and naming details: **[PROJECT.md](./PROJECT.md)**.
+Agent context: **read ANCHOR** → `~/repo/ai-context-dev-ganesha/work/app-tlt-pronunciation/ANCHOR.md` (see [PROJECT.md](./PROJECT.md)).

@@ -1,143 +1,59 @@
-# tlt-pronunciation
+# TLT Pronunciation
 
-**Tibetan Language Tools — Pronunciation** (v0 scaffold): browser-only static HTML/JS for **standard Central Tibetan** syllable composition and pronunciation tooling.
+Browser-only tool for **standard Central Tibetan** syllable preview: consonant + vowel glyphs, layout tuning, and pronunciation audio (v0).
 
-| Item | Value |
-|------|--------|
-| GitHub owner | [jrod-disco](https://github.com/jrod-disco) |
-| Remote repo | `jrod-disco/tlt-pronunciation` |
-| Local folder | `app_tlt_pronunciation` (CONDEV: `~/repo/ai-context-dev-ganesha/work/app-tlt-pronunciation/ANCHOR.md`) |
+![Work in progress](assets/screenshot.jpg)
 
-![Screenshot: Work in Progress](assets/screenshot.jpg)
+## Requirements
 
-## Local development
+- **Node.js** (for dev/build)
+- **Python 3** (optional static preview without Vite)
 
-Serve from the **repository root** so relative paths resolve (do not open `index.html` via `file://`).
+Serve from the **repo root** (not `file://`).
 
-### Preferred: Vite (`npm run dev`)
+## Quick start
+
+From the repository root:
 
 ```bash
-cd ~/repo/app_tlt_pronunciation
-npm install   # first time only
+npm install
 npm run dev
 ```
 
-- **URL:** [http://127.0.0.1:3030/](http://127.0.0.1:3030/) preferred; if busy, Vite auto-picks 3031, 3032… (check terminal for actual URL)
-- **HMR** for `index.html`, `css/`, ES modules and Vue SFCs under `js/`
-- **Dev deps:** `vite`, `@vitejs/plugin-vue`; runtime dep: `vue` (3.x). Only the MAIN glyph display (`js/glyph/GlyphPreview.vue`) is Vue; the rest is vanilla JS.
-- Opens the browser when possible (`server.open`)
+Open the URL Vite prints (default [http://127.0.0.1:3030](http://127.0.0.1:3030)).
 
-Optional production bundle:
+## Scripts
 
-```bash
-npm run build          # writes `dist/`
-npm run preview:vite   # serve `dist/` on 3030
-```
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Vite dev server + HMR |
+| `npm run build` | Production bundle → `dist/` |
+| `npm run preview:vite` | Serve `dist/` |
+| `npm run preview` | Static server from repo root (port `3030`, or set `PORT`) |
 
-### Zero-deps fallback: Python (`npm run preview`)
-
-Same app, no `node_modules` — static file server only (no HMR):
+After clone, if glyphs/audio 404 in dev, ensure `public/assets` → `../assets` exists:
 
 ```bash
-npm run preview
+ln -sfn ../assets public/assets
 ```
 
-Defaults to port **3030** (same as Vite). Override:
+## What's in the repo
 
-```bash
-PORT=8081 npm run preview
-```
+| Area | Notes |
+|------|--------|
+| `index.html`, `css/`, `js/` | App shell, glyph grid, pickers, audio |
+| `assets/svg/` | Sliced consonants/vowels/marks + source charts (CC BY-SA; see footer in app) |
+| `assets/audio/` | Row clips + optional master; segment times in `js/data/consonant-row-audio.json` |
+| `js/data/glyph-layout.json` | Layout numbers (edit → full reload in dev) |
 
-Other fixed ports:
+**Query param:** `?shad=1` shows shad for crossbar alignment checks.
 
-```bash
-npm run preview:8080
-npm run preview:8081
-```
-
-Equivalent without npm:
-
-```bash
-python3 -m http.server 3030 --bind 127.0.0.1
-```
-
-### Assets path
-
-Static files live in repo-root `assets/` and are exposed at `assets/...` in the browser. Vite uses `public/assets` → `../assets` (symlink) so dev/build URLs match Python preview. After clone, if `public/assets` is missing: `ln -sfn ../assets public/assets`.
+**Stubs (not wired):** text compose (`js/composer.js`), placement rules (`js/rules/placement.js`).
 
 ## Deploy
 
-Manual upload by Jose — **no** GitHub Pages requirement. Upload the project tree preserving paths (`index.html`, `css/`, `js/`, `assets/`).
+Static upload: ship `index.html`, `css/`, `js/`, and `assets/` with the same relative paths (or use `dist/` after `npm run build`).
 
-## SVG assets
+## Context for contributors
 
-**Two master files** — **v1 composer** uses the Fynn chart first; Inkscape chart is reference:
-
-- **`PRIMARY_SVG`:** `assets/svg/Tibetan_consonants་_and_vowel_marks_with_additional_consonants_and_vowels_for_writing_Sanskrit.svg` — Uchen consonant stacks **with vowel marks** (+ Sanskrit extras in the lower band). CC BY-SA 4.0 (Christopher J. Fynn).
-- **Reference:** `assets/svg/Uchen_and_Umê_scripts.svg` — labeled Uchen + Umê consonant charts (`#g4517`, Wylie labels). **No vowel signs**; Umê / `layer4` out of scope until a later milestone.
-
-**Sliced assets:** `consonants/<wylie>.svg` (ka–nga so far), `vowels/<i|u|e|o>.svg` (or `mark-<v>.svg`), `mark-tsek.svg`, `mark-shad.svg` (also looked up in `marks/`) are preferred by `js/glyph/GlyphPreview.vue`; other consonants fall back to the reference chart. Shad: add `?shad=1`.
-
-Structure notes: cloud agent store `internal/vowel-svg-notes.md` / `internal/uchen-svg-notes.md` (not yet in CONDEV — migrate on request).
-
-**Research:** slot-position diagram → `assets/research/letter-positions.webp`.
-
-## Audio (v0 prototype)
-
-| File | Role |
-|------|------|
-| `assets/audio/tibetanconsonants.mp3` | TLS-style clip: **all 30 consonants** with inherent **a** (~23.1s) |
-
-Playback (`js/audio.js`), per letter, first match wins:
-
-1. **Individual file** `assets/audio/consonants/<wylie>.mp3` (or `.wav`), e.g. `ka.mp3`, `kha.mp3`, `nya.mp3` (Wylie as in `js/data/consonants.js`). Drop it in; no code change. Reload to pick up (results are cached per session).
-2. **Master mp3 + offsets**: `js/data/consonant-audio-offsets.json` holds `{ "start", "end" }` seconds per Wylie key. Edit by ear; Vite hot-reloads.
-3. **Equal split** of the master file if a letter has no (valid) entry.
-
-Initial offsets were auto-generated by `scripts/detect-consonant-offsets.py` (energy-dip detection, macOS `afconvert`; ffmpeg/sox not needed). They are a rough guess — the clip has almost no silence between letters, so expect to tune. Console (debug level) logs once when playback switches to approximate audio. **Vowel audio:** none yet (`playVowelSyllable` stub); vowel changes replay the consonant clip.
-
-The composer (`js/composer.js`) and placement rules (`js/rules/placement.js`) are **stubs** for text compose; the grid prototype uses Unicode preview until **`PRIMARY_SVG`** / **`REFERENCE_SVG`** compose is wired.
-
-## Layout
-
-```
-index.html
-css/styles.css
-js/main.js
-js/composer.js
-js/rules/placement.js
-assets/svg/Tibetan_consonants་_and_vowel_marks_with_additional_consonants_and_vowels_for_writing_Sanskrit.svg
-assets/svg/Uchen_and_Umê_scripts.svg
-assets/svg/consonants/   (optional splits)
-assets/svg/vowels/       (optional)
-```
-
-## Glyph grid (MAIN display)
-
-`js/glyph/GlyphPreview.vue` composes root / vowel / tsheg / shad as **separate SVG files** in a CSS Grid (areas `vowel-above`, `root tsheg shad`, `vowel-below`; `align-items: start`). Tsheg on by default; shad only with `?shad=1`.
-
-Tune in `js/data/glyph-layout.json` (units = SVG slice units; HMR applies):
-- `cells.root.{w,h}` fixed root cell; `grid.{aboveH,mainH,belowH,colGap,padding}` track sizes
-- `cells.vowel.{gap,belowGap,dx,dy}`, `cells.tsheg.{w,yFraction,dx,dy}`, `cells.shad.{w,dx,dy}` per-part offsets
-- `perGlyph.<wylie>.{crossbarTop,dx,dy}` pulls root up so crossbar top aligns with shad top
-- `debugTint` / `tintColor` (cream `#e8e0d0`) tints vowel + shad
-
-Tune in `css/styles.css`: `.glyph-stage { --glyph-h; --glyph-units }` (overall size; keep `--glyph-units` = aboveH+mainH+belowH), `.glyph-grid`, `.glyph-part--*` (grid-area / mask).
-
-## Tuning layout
-
-Edit **`js/data/glyph-layout.json`**, save; `npm run dev` does a full page reload (JSON is a static Vite import, not a runtime `fetch`). No agent needed. Units = SVG slice units.
-
-- Reload behavior: layout is read once per page load. `npm run preview` / `dist/` serve the built snapshot — run `npm run build` after edits.
-- `cells.shad.dy` maps to the shad's CSS `margin-top` (units × `--u`); negative moves it up.
-
-- `cells.shad.dy` — shad vertical nudge (neg = up)
-- `cells.tsheg` — `{w, yFraction, dx, dy}`
-- `cells.vowel.gap` — gap between root and vowel above (`belowGap` for below)
-- `grid` — track sizes / padding / `colGap` (the "frame"; no top-level `frame` key exists)
-- `perGlyph.<wylie>` — `{dx, dy, crossbarTop}`; `crossbarTop` = crossbar top distance below slice top (~47 for ka/kha/ga/nga)
-- `debugTint` (`true`/`false`) + `tintColor` (hex) — tint vowel + shad
-
-## Project notes
-
-Agent context: **read ANCHOR** → `~/repo/ai-context-dev-ganesha/work/app-tlt-pronunciation/ANCHOR.md` (see [PROJECT.md](./PROJECT.md)).
+Planning and handoff live outside this repo — see [PROJECT.md](./PROJECT.md).

@@ -1,10 +1,7 @@
 import { composeSyllable, renderCompositionStub } from "./composer.js";
 import { CONSONANTS, CONSONANT_ROWS } from "./data/consonants.js";
 import { VOWEL_CHOICES } from "./data/vowels.js";
-import {
-  getAudioSeekNote,
-  playConsonantByWylie,
-} from "./audio.js";
+import { getAudioSeekNote, hasFullVowelRowAudio, playVowelSyllable } from "./audio.js";
 import { createGlyphDisplay } from "./glyph/glyph-display.js";
 
 const input = document.getElementById("syllable-input");
@@ -62,7 +59,7 @@ function syncUi() {
     slotMainValue.textContent = `${consonant.tibetan} ${consonant.label}${tone}`;
   }
   if (slotVowelValue) {
-    slotVowelValue.textContent = vowel.label;
+    slotVowelValue.textContent = vowel.mark ? `${vowel.mark} ${vowel.label}` : vowel.label;
   }
   if (stage) {
     renderGlyph({ wylie: consonant.wylie, vowelId: vowel.id, tsheg: true, shad: showShad });
@@ -86,7 +83,7 @@ function syncUi() {
 }
 
 function playCurrent() {
-  playConsonantByWylie(state.wylie);
+  playVowelSyllable(state.vowelId, state.wylie);
 }
 
 function selectConsonant(wylie) {
@@ -121,8 +118,14 @@ function buildConsonantGrid() {
     for (const c of row) {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "consonant-btn";
+      const fullVowels = hasFullVowelRowAudio(c.wylie);
+      btn.className = fullVowels
+        ? "consonant-btn consonant-btn--vowels-full"
+        : "consonant-btn";
       btn.dataset.wylie = c.wylie;
+      if (fullVowels) {
+        btn.title = "All vowel recordings (a, i, u, e, o)";
+      }
       btn.setAttribute("aria-pressed", c.wylie === state.wylie ? "true" : "false");
       const tone = c.lowTone ? " low" : "";
       btn.textContent = `${c.tibetan} ${c.label}${tone}`;

@@ -8,6 +8,8 @@
 | Remote repo | `jrod-disco/tlt-pronunciation` |
 | Local folder | `app_tlt_pronunciation` (CONDEV: `~/repo/ai-context-dev-ganesha/work/app-tlt-pronunciation/ANCHOR.md`) |
 
+![Screenshot: Work in Progress](assets/screenshot.jpg)
+
 ## Local development
 
 Serve from the **repository root** so relative paths resolve (do not open `index.html` via `file://`).

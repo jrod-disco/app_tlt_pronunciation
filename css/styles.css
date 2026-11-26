@@ -7,6 +7,9 @@
   --muted: #7a5c40;
   --accent: #9b4400;
   --border: #c4aa80;
+  --audio-highlight: #c4a060;
+  --audio-highlight-bg: color-mix(in srgb, var(--audio-highlight) 22%, var(--bg));
+  --audio-highlight-border: color-mix(in srgb, var(--audio-highlight) 45%, var(--border));
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height: 1.5;
 }
@@ -20,6 +23,9 @@
     --muted: #a08060;
     --accent: #e8a020;
     --border: #4a2830;
+    --audio-highlight: #b89050;
+    --audio-highlight-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
+    --audio-highlight-border: color-mix(in srgb, var(--audio-highlight) 55%, var(--border));
   }
 }
 
@@ -361,11 +367,21 @@ svg.glyph-part--root {
   border: 1px solid var(--border);
 }
 
+.consonant-btn--vowels-full:not([aria-pressed="true"]) {
+  background: var(--audio-highlight-bg);
+  border-color: var(--audio-highlight-border);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--audio-highlight) 25%, transparent);
+}
+
 .consonant-btn[aria-pressed="true"],
 .vowel-btn[aria-pressed="true"] {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
+}
+
+.consonant-btn--vowels-full[aria-pressed="true"] {
+  box-shadow: none;
 }
 
 .vowel-choices {

@@ -6,7 +6,10 @@ Stretch goals included color coding and candle wheel graphics based on how we've
 
 ![Work in progress](assets/screenshot.jpg)
 
-[See a video of an early build.](assets/screencap.mov)
+
+https://github.com/user-attachments/assets/d79e5f2d-4506-4bbb-be4f-00bd78924844
+
+
 
 ---
 

@@ -1,8 +1,12 @@
-# TLT Pronunciation : Tibetan Language Tool for Pronunciation
+# Tibetan Language Tool for Pronunciation
 
 As a new student of the Tibetan language, I wanted to have something to tinker with in code that would be helpful to myself and other new Tibetan language learners. This browser-based tool let's students select a root syllable/consonant and adjust it by adding vowels, prefix, suffix(es), super and sub scripts. Ultimately I hope to have accurate pronunciation in male and female presenting voices for all of the possible combinations.
 
 Stretch goals included color coding and candle wheel graphics based on how we've learned from our teacher.
+
+![Work in progress](assets/screenshot.jpg)
+
+---
 
 ## Resource credits
 
@@ -30,7 +34,7 @@ Sliced glyphs in `assets/svg/` are derived from these Wikimedia Commons files. A
 
 License: [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Extracted slices are a derivative work under the same license.
 
-![Work in progress](assets/screenshot.jpg)
+---
 
 ## Requirements
 

@@ -4,11 +4,8 @@ As a new student of the Tibetan language, I wanted to have something to tinker w
 
 Stretch goals included color coding and candle wheel graphics based on how we've learned from our teacher.
 
-![Work in progress](assets/screenshot.jpg)
-
-
 https://github.com/user-attachments/assets/d79e5f2d-4506-4bbb-be4f-00bd78924844
-
+(sound on)
 
 
 ---

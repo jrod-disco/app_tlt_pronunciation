@@ -6,6 +6,8 @@ Stretch goals included color coding and candle wheel graphics based on how we've
 
 ![Work in progress](assets/screenshot.jpg)
 
+[See a video of an early build.](assets/screencap.mov)
+
 ---
 
 ## Resource credits

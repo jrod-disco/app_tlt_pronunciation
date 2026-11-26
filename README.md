@@ -1,6 +1,34 @@
-# TLT Pronunciation
+# TLT Pronunciation : Tibetan Language Tool for Pronunciation
 
-Browser-only tool for **standard Central Tibetan** syllable preview: consonant + vowel glyphs, layout tuning, and pronunciation audio (v0).
+As a new student of the Tibetan language, I wanted to have something to tinker with in code that would be helpful to myself and other new Tibetan language learners. This browser-based tool let's students select a root syllable/consonant and adjust it by adding vowels, prefix, suffix(es), super and sub scripts. Ultimately I hope to have accurate pronunciation in male and female presenting voices for all of the possible combinations.
+
+Stretch goals included color coding and candle wheel graphics based on how we've learned from our teacher.
+
+## Resource credits
+
+This app is **not affiliated** with the sites below; they are study references only.
+
+### Sowa Rigpa
+
+This is the course I'm taking to learn Tibetan. Very much enjoying it.
+
+- [Tibetan Language 1](https://www.sowarigpainstitute.org/course/tibetan-language-1-1-fall-2026)
+
+### Pronunciation & spelling (Standard Central Tibetan)
+
+- [Unit 1 — The Tibetan Alphabet](https://tibetanlanguage.school/learn/standard-tibetan/unit-1/)
+- [Unit 2 — How to Spell Tibetan Words](https://tibetanlanguage.school/learn/standard-tibetan/unit-2/)
+
+### SVG glyph charts (CC BY-SA 4.0)
+
+Sliced glyphs in `assets/svg/` are derived from these Wikimedia Commons files. Attribution also appears in the in-app footer.
+
+| Role | Author | Source |
+|------|--------|--------|
+| Primary chart (consonants + vowel marks) | Christopher J. Fynn | [Tibetan consonants and vowel marks…](https://commons.wikimedia.org/wiki/File:Tibetan_consonants%E0%BC%8B_and_vowel_marks_with_additional_consonants_and_vowels_for_writing_Sanskrit.svg) |
+| Reference chart (Uchen / Umê, no vowels) | Goran tek-en | [Uchen and Umê scripts](https://commons.wikimedia.org/wiki/File:Uchen_and_Um%C3%AA_scripts.svg) |
+
+License: [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Extracted slices are a derivative work under the same license.
 
 ![Work in progress](assets/screenshot.jpg)
 
@@ -42,7 +70,7 @@ ln -sfn ../assets public/assets
 | Area | Notes |
 |------|--------|
 | `index.html`, `css/`, `js/` | App shell, glyph grid, pickers, audio |
-| `assets/svg/` | Sliced consonants/vowels/marks + source charts (CC BY-SA; see footer in app) |
+| `assets/svg/` | Sliced consonants/vowels/marks (see **Resource credits**) |
 | `assets/audio/` | Row clips + optional master; segment times in `js/data/consonant-row-audio.json` |
 | `js/data/glyph-layout.json` | Layout numbers (edit → full reload in dev) |
 
@@ -54,6 +82,6 @@ ln -sfn ../assets public/assets
 
 Static upload: ship `index.html`, `css/`, `js/`, and `assets/` with the same relative paths (or use `dist/` after `npm run build`).
 
-## Context for contributors
+## Planning / agent context
 
-Planning and handoff live outside this repo — see [PROJECT.md](./PROJECT.md).
+Not stored in this repository. Use the **ContextDev** work package `app-tlt-pronunciation` (start with **ANCHOR.md** in that tree).
